@@ -1,13 +1,13 @@
 #!/bin/bash
 
-kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.12/deploy/manifests/00-crds.yaml
+kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.13/deploy/manifests/00-crds.yaml
 kubectl create namespace cert-manager
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
 helm install \
   --name cert-manager \
   --namespace cert-manager \
-  --version v0.12.0 \
+  --version v0.13.0 \
   jetstack/cert-manager
 
 sleep 30
@@ -42,6 +42,7 @@ spec:
     name: test-selfsigned
 EOF
 
+kubectl apply -f 10-issuer.yaml
 kubectl apply -f test-resources.yaml
 sleep 20
 kubectl describe certificate -n cert-manager-test
